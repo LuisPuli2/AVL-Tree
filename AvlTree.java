@@ -13,6 +13,7 @@ import java.util.Scanner;
  * @author Justin Ethier
  */
 class AvlTree<T extends Comparable<? super T>> {
+	Scanner s;
   /** 
    * AvlNode is a container class that is used to store each element 
    * (node) of an AVL tree. 
@@ -314,7 +315,7 @@ class AvlTree<T extends Comparable<? super T>> {
    * @return True if the tree is empty 
    */
   public boolean isEmpty(){
-    return (root == null);
+    return root == null;
   }
 
 
@@ -398,7 +399,7 @@ class AvlTree<T extends Comparable<? super T>> {
               int leftHeight = t.right.left != null ? t.right.left.height : 0;
   
               if(rightHeight >= leftHeight)
-                  t = rotateWithLeftChild(t);            
+                  t = rotateWithLeftChild(t);//Primera modificación            
               else
                   t = doubleWithRightChild(t);
           }
@@ -524,6 +525,7 @@ class AvlTree<T extends Comparable<? super T>> {
     return true;
   }
 public static void main(String[] args) {
+	/*
   	 System.out.println("Hola!, está es la primera modificación que hago de este código ");
   	 System.out.println("Ingresa los elementos uno por uno de los que quieras que se agreguen al árbol: ");
   	 System.out.println("Cuándo ya sean todos, solo ingresa un -222");
@@ -532,11 +534,11 @@ public static void main(String[] args) {
   	 AvlTree<Integer> arbolito = new AvlTree<Integer>();
   	 try {
   	 	entrada = s.nextInt();
-  	 	do {
+  	 	while (entrada != -222) {
   	 		arbolito.insert(entrada); // Se agrega al árbol.
   	 		System.out.println("Ingresaste el número " + entrada );
   	 		entrada = s.nextInt();
-  	 	} while (entrada != -222) ;
+  	 	}  
   	 } catch (Exception e) {
   	 	System.err.println("Algo hiciste mal, chavo!");
   	 }
@@ -544,9 +546,30 @@ public static void main(String[] args) {
   	 System.out.println(arbolito.serializeInfix());
   	 System.out.println("Pre order:");
   	 System.out.println(arbolito.serializePrefix());
+  	 */
+  	 System.out.println("Bienvenido, este es el nuevo menú un poco más interactivo :)");
+  	 int n = menu();
+  	 System.out.println(n);
 
   	 
 }
+
+public static int menu (){
+	System.out.println("Qué deseas hacer ?");
+	System.out.println("1.- Agregar elementos al árbol?");
+	System.out.println("2.- Eliminar elementos al árbol?");
+	System.out.println("3.- Imprimir el árbol");
+	System.out.println("4.- Salir ");
+	Scanner s = new Scanner (System.in);
+	try {
+		return s.nextInt();
+	} catch (Exception e) {
+		System.out.println("Ingresaste mal algo, prro");
+		menu(); //Se llama recursivamente
+	}
+	return 0;
+}
+
 
   /**
    * Main entry point; contains test code for the tree.
