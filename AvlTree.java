@@ -1,5 +1,13 @@
 import java.lang.StringBuilder;
 import java.util.Scanner;
+import java.io.*;
+import java.lang.Math;
+import java.awt.Desktop;
+import java.util.Scanner;
+import java.util.Iterator;
+
+
+
 
 /** 
  * Implementation of an AVL Tree, along with code to test insertions on the tree.
@@ -13,7 +21,11 @@ import java.util.Scanner;
  * @author Justin Ethier
  */
 class AvlTree<T extends Comparable<? super T>> {
-	Scanner s;
+	InputStreamReader isr;
+	BufferedReader br;
+	Scanner s; //temp
+	String archivo; //El archivo que abrirá al terminar de generar el archivo ".svg".
+	BufferedWriter bw; //Para escribir el archivo.
   /** 
    * AvlNode is a container class that is used to store each element 
    * (node) of an AVL tree. 
@@ -547,9 +559,15 @@ public static void main(String[] args) {
   	 System.out.println("Pre order:");
   	 System.out.println(arbolito.serializePrefix());
   	 */
+  	 /*
+  	 AvlTree<Integer> arbol = new AvlTree<Integer>();
   	 System.out.println("Bienvenido, este es el nuevo menú un poco más interactivo :)");
   	 int n = menu();
   	 System.out.println(n);
+  	 */
+  	 AvlTree<Integer> arbol = new AvlTree<Integer>();
+  	 System.out.println("Bienvenido, este es el nuevo menú un poco más interactivo :)");
+  	 arbol.hazArbolAVL();
 
   	 
 }
@@ -569,6 +587,102 @@ public static int menu (){
 	}
 	return 0;
 }
+
+
+	public void hazArbolAVL(){
+		//p.dibujaArbolAVL(arbol);
+		AvlTree<Integer> arbol2 = new AvlTree<Integer>();
+		int [] valores = recibeElementos();
+		for (int v :valores) {
+			arbol2.insert(v);
+		}
+		dibujaArbolAVL(arbol2);
+	}
+
+	public void dibujaArbolAVL (AvlTree<Integer> arbol){
+		archivo = "arbolAVL.svg";
+		//Iterator<Integer> it = arbol.iterator();
+		int largo=800;
+		int ancho=1500;
+		int x = (int)(ancho/2);
+		int y = 20;
+		try {
+			bw = new BufferedWriter(new FileWriter(archivo)); //Creamos el archivo para la lista.
+			bw.write("<?xml version='1.0' encoding='UTF-8' ?>");
+		    bw.write("<svg width='"+ancho+"' height='"+largo+"'>");
+  		    bw.write("<g>");
+  		    bw.write("<rect x='0' y='0' width='"+ancho+"' height='"+largo+"' fill='black' stroke='black' stroke-width='20' />");
+  		    imprimeVertice(arbol.root, x,y,bw,x/2);
+  		    bw.write("</g>");
+  		    bw.write("</svg>");
+  		    bw.close();
+		} catch (IOException e) {
+			System.out.println("Ocurrió un error.");
+		}
+		//Proyecto2 p = new Proyecto2();
+		abrirarchivo(archivo);
+	}
+
+	@SuppressWarnings("unchecked") private void imprimeVertice (AvlNode v,int x,int y, BufferedWriter bw, int a){
+		if (v == null) {
+			return;
+		}
+		AvlNode izquierdo = v.left;
+		AvlNode derecho = v.right;
+		int t =(int)(x/2);
+		int s = y+100;
+		int t1 =t+(x);
+		try {
+			if (izquierdo != null) { //Si tienes hijo izquierdo.
+				bw.write("<line x1='"+(x-a)+"' y1='"+(s)+"' x2='"+(x)+"' y2='"+(y)+"' stroke = 'brown' stroke-width='5'/>");
+			}
+			if (derecho != null) { //Si tiene hijo derecho.
+				bw.write("<line x1='"+(x+a)+"' y1='"+(s)+"' x2='"+(x)+"' y2='"+(y)+"' stroke = 'brown' stroke-width='5'/>");
+			}
+			bw.write("<circle cx='"+x+"' cy='"+y+"' r='20' stroke='black' stroke-width='3' fill='green' />");
+  			bw.write("<text x='"+x+"' y='"+y+"' font-family='sans-serif' font-size='20' text-anchor='middle' fill='black'>"+v.element+"</text> ");
+  			y += 100;
+  			imprimeVertice(izquierdo,x-a,y,bw,a/2);
+  			imprimeVertice(derecho,x+a,y,bw,a/2);
+		} catch (IOException e) {
+			System.out.println("Algo salió mal");
+		}
+		
+	}
+
+	public int[] recibeElementos (){
+		isr = new InputStreamReader(System.in);
+		br = new BufferedReader (isr);
+		String entrada = "";
+		int [] arreglo1;
+		try{
+			entrada = br.readLine();
+			if (entrada == null) {
+				return null;
+			}
+			entrada = entrada.replaceAll(" ","");
+			entrada = entrada.replaceAll(";",",");
+			String [] arreglo2 = entrada.split(",");
+			entrada = "";
+			arreglo1 = new int [arreglo2.length];
+			for (int i =0;i<arreglo2.length ;i++ ) {
+				arreglo1[i] = Integer.parseInt(arreglo2[i]);
+			}
+			return arreglo1;
+		} catch (Exception e) {
+			System.out.println("La cadena no es válida");
+		}
+		return null;
+	}
+
+	public void abrirarchivo(String archivo){ 
+     	try {
+            File objetofile = new File (archivo);
+            Desktop.getDesktop().open(objetofile);
+     	}catch (IOException bbb) {
+            System.out.println("No está bien el archivo");
+     	}
+ 	} 
 
 
   /**
