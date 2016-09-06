@@ -537,36 +537,8 @@ class AvlTree<T extends Comparable<? super T>> {
     return true;
   }
 public static void main(String[] args) {
-	/*
-  	 System.out.println("Hola!, está es la primera modificación que hago de este código ");
-  	 System.out.println("Ingresa los elementos uno por uno de los que quieras que se agreguen al árbol: ");
-  	 System.out.println("Cuándo ya sean todos, solo ingresa un -222");
-  	 Scanner s = new Scanner(System.in);
-  	 int entrada = 0;
-  	 AvlTree<Integer> arbolito = new AvlTree<Integer>();
-  	 try {
-  	 	entrada = s.nextInt();
-  	 	while (entrada != -222) {
-  	 		arbolito.insert(entrada); // Se agrega al árbol.
-  	 		System.out.println("Ingresaste el número " + entrada );
-  	 		entrada = s.nextInt();
-  	 	}  
-  	 } catch (Exception e) {
-  	 	System.err.println("Algo hiciste mal, chavo!");
-  	 }
-  	 System.out.print("Tu árbol in order queda así: ");
-  	 System.out.println(arbolito.serializeInfix());
-  	 System.out.println("Pre order:");
-  	 System.out.println(arbolito.serializePrefix());
-  	 */
-  	 /*
   	 AvlTree<Integer> arbol = new AvlTree<Integer>();
-  	 System.out.println("Bienvenido, este es el nuevo menú un poco más interactivo :)");
-  	 int n = menu();
-  	 System.out.println(n);
-  	 */
-  	 AvlTree<Integer> arbol = new AvlTree<Integer>();
-  	 System.out.println("Bienvenido, este es el nuevo menú un poco más interactivo :)");
+  	 System.out.println("Bienvenido, este es el nuevo menú un poco más interactivo, ingresa TODOS los elementos en una sola linea :)");
   	 arbol.hazArbolAVL();
 
   	 
